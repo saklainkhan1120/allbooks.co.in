@@ -85,9 +85,7 @@ const nextConfig = {
       },
     ];
   },
-  // Ensure compatibility with Netlify
   trailingSlash: false,
-  output: 'standalone',
 };
 
 module.exports = nextConfig;

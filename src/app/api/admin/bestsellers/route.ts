@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { getBestsellerBooks, addBestseller, removeBestseller, bulkAddBestsellers } from '@/lib/bestsellers';
 

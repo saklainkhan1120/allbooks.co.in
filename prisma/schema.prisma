@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model books {
+  id                      String             @id @default(uuid())
+  title                   String?
+  author                  String?
+  asin                    String?
+  isbn                    String?
+  publisher               String?
+  language                String?
+  publication_date        String?
+  page_count              Int?
+  inr_price               Decimal?
+  usd_price               Decimal?
+  best_seller_rank        Int?
+  cover_image_url         String?
+  description             String?
+  book_format             String?
+  main_genre              String?
+  selling_price_inr       Decimal?
+  status                  String?
+  created_at              DateTime           @default(now())
+  updated_at              DateTime?          @updatedAt
+  about_the_author        String?
+  affiliate_store_1_url   String?
+  affiliate_store_2_url   String?
+  affiliate_store_3_url   String?
+  affiliate_store_4_url   String?
+  affiliate_store_5_url   String?
+  affiliate_store_6_url   String?
+  affiliate_store_7_url   String?
+  affiliate_store_8_url   String?
+  audiobook_isbn          String?
+  author_3                String?
+  author_website_url      String?
+  bisac_codes             Json?
+  book_award              String?
+  book_excerpts           String?
+  bullet_text_1           String?
+  bullet_text_2           String?
+  bullet_text_3           String?
+  bullet_text_4           String?
+  bullet_text_5           String?
+  buy_now_box_content     String?
+  dimensions              String?
+  ebook_isbn              String?
+  edition                 String?
+  genre_2                 String?
+  genre_3                 String?
+  goodreads_book_page_url String?
+  hardcover_isbn          String?
+  isbn_10                 String?
+  meta_description        String?
+  meta_keywords           Json?
+  page_title              String?
+  paperback_isbn          String?
+  place_of_origin         String?
+  publisher_website_url   String?
+  publishing_group        String?
+  related_tags_keywords   Json?
+  search_keywords         Json?
+  second_author_narrator  String?
+  series_name             String?
+  status_on_front         String?
+  subject_category_1      String?
+  subject_category_2      String?
+  trade_distributor       String?
+  weight                  String?
+  youtube_video_url       String?
+  bestseller_books        bestseller_books[]
+
+  @@index([asin])
+  @@index([author])
+  @@index([created_at])
+  @@index([main_genre])
+  @@index([publication_date])
+  @@index([publisher])
+  @@index([status])
+  @@index([status, created_at])
+  @@index([status, publication_date])
+  @@map("books")
+}
+
+model admin_users {
+  id            String   @id @default(uuid())
+  email         String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  password_hash String?
+
+  @@map("admin_users")
+}
+
+model bestseller_books {
+  id         String   @id @default(uuid())
+  book_id    String
+  asin       String?
+  title      String?
+  author     String?
+  added_date DateTime @default(now())
+  sort_order Int      @default(0)
+  status     String   @default("active")
+  updated_at DateTime @updatedAt
+  book       books    @relation(fields: [book_id], references: [id])
+
+  @@index([asin])
+  @@index([status])
+  @@map("bestseller_books")
+}
+
+model daily_deals {
+  id                String   @id @default(uuid())
+  asin              String
+  position          Int      @default(0)
+  is_top_six        Boolean  @default(false)
+  is_fixed_position Boolean  @default(false)
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+  status            String   @default("active")
+
+  @@index([asin])
+  @@index([status])
+  @@map("daily_deals")
+}
